@@ -1,0 +1,29 @@
+@import "../../assets/stylus/variable2.styl"
+
+.flex-list
+  .title
+    margin 20px 0
+    text-align center
+    font-size $font-size-large
+    color $color-font-d
+    letter-spacing 2px
+  .item-group
+    display flex
+    align-items top
+    &:not(:last-child)
+      margin-bottom 10px
+    .item
+      flex 1
+      &:not(:last-child)
+        margin-right 4px
+      img
+        width 100%
+      .msg
+        font-size $font-size-small
+        color $color-font-d
+        line-height 20px
+        overflow hidden
+        text-overflow ellipsis
+        display -webkit-box
+        -webkit-box-orient vertical
+        -webkit-line-clamp 2
