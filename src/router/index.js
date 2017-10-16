@@ -10,6 +10,7 @@ import { createHashHistory } from 'history'
 
 import App from '../App'
 import Home from '../pages/Home'
+import Singer from '../pages/Singer'
 
 import User from '../pages/User'
 
@@ -19,6 +20,7 @@ const AppRouter = (
     <Router history={history}>
         <Switch>
             <Route path="/Home" component={Home}/>
+            <Route path="/Singer/:singerId" component={Singer}/>
             <Route path="/User" component={User}/>
             <Redirect to="/Home/Recommend"/>
         </Switch>

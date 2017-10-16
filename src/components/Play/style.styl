@@ -1,0 +1,389 @@
+@import "../../assets/stylus/variable2.styl";
+@import "../../assets/stylus/mixin.styl";
+
+.normal-player
+  position fixed
+  top 0
+  left 50%
+  bottom 0
+  width 100%
+  max-width 500px
+  background-color #222
+  transform translate3d(-50%, 0, 0)
+  z-index 999
+  opacity 0
+  pointer-events none
+  transition opacity .5s
+  &.show
+    pointer-events all
+    opacity 1
+  &.enter .title-group
+    animation-delay .3s
+    animation-name title-enter
+  &.leave .title-group
+    animation-name title-leave
+    animation-duration .2s
+  .title-group
+    padding-bottom 10px
+    position absolute
+    top 0
+    left 0
+    z-index 2
+    width 100%
+    transform translate3d(0, -100%, 0)
+    animation-fill-mode forwards
+    animation-duration .1s
+    .player-header
+      position relative
+      height 40px
+      font-size 18px
+      line-height 40px
+      text-align center
+      z-index 2
+      color #fff
+      .song-name
+        margin 0 auto
+        width 70%
+        no-wrap()
+      .icon-back
+        padding 9px
+        position absolute
+        left 10px
+        top 50%
+        color $color-gray-d2
+        font-size 22px
+        transform translateY(-50%) rotate(-90deg)
+    .singerName
+      margin 4px auto 0
+      width 60%
+      font-size 14px
+      text-align center
+      color #fff
+      z-index 2
+      no-wrap()
+      .text
+        position relative
+        &:after, &:before
+          content ""
+          position absolute
+          top 50%
+          width 20px
+          border-top 1px solid $color-border
+        &:after
+          left 0
+          transform translateX(-120%)
+        &:before
+          right 0
+          transform translateX(120%)
+  .middle
+    position absolute
+    top 68px
+    bottom 118px
+    width 100%
+    z-index 2
+    overflow hidden
+    .slider-item
+      position relative
+      height 100%
+    .cd-slider
+      padding-bottom 30px
+      display flex
+      flex-direction column
+    .currentLyricTxt
+      display flex
+      align-items center
+      justify-content center
+      margin 10px auto 0
+      flex 1
+      width 80%
+      font-size $font-size-medium
+      color #f4f4f4
+      .text
+        flex 1
+        no-wrap()
+    .player-cd
+      margin 0 auto
+      position relative
+      padding-top 80%
+      width 80%
+      border-radius 50%
+      overflow hidden
+      .cd-wrap
+        position absolute
+        top 0
+        left 0
+        right 0
+        bottom 0
+        border-radius 50%
+        border 10px solid hsla(0, 0%, 100%, .1)
+        animation-duration 20s
+        animation-timing-function linear
+        animation-iteration-count infinite
+        animation-name cd-rotate
+        img
+          border-radius 50%
+        &.pause
+          animation-play-state paused
+  .player-bg
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    opacity .6
+    filter blur(50px)
+  &.enter .bottom
+    animation-delay .3s
+    animation-name bottom-enter
+  &.leave .bottom
+    animation-name bottom-leave
+    animation-duration .2s
+  .bottom
+    position: absolute
+    bottom: 30px
+    width: 100%
+    z-index 2
+    transform translate3d(0, 150%, 0)
+    animation-fill-mode forwards
+    animation-duration .1s
+    .progress-wrapper
+      display: flex
+      align-items: center
+      width: 80%
+      margin: 0px auto
+      padding-bottom 10px
+      .progress-bar
+        height 30px
+        .bar-inner
+          position relative
+          top 13px
+          height 2px
+          background $color-gray
+          .progress
+            position absolute
+            height 100%
+            background $color-theme
+          .progress-btn-wrapper
+            position absolute
+            left -8px
+            top -13px
+            width: 30px
+            height 30px
+            .progress-btn
+              position relative
+              top 7px
+              left 7px
+              box-sizing border-box
+              width 16px
+              height 16px
+              border 3px solid $color-theme
+              border-radius 50%
+              background $color-theme
+      .time
+        color $color-font
+        font-size $font-size-small
+        flex 0 0 30px
+        line-height 30px
+        width 30px
+        &.time-l
+          margin-right 4px
+          text-align left
+        &.time-r
+          margin-left 4px
+          text-align right
+      .progress-bar-wrapper
+        flex 1
+    .operators
+      display flex
+      align-items: center
+      .icon
+        flex 1
+        color $color-theme
+        &.disable
+          color: $color-theme-d
+        i
+          font-size 30px
+          &.icon-not-favorite, &.icon-favorite, &.icon-sequence, &.icon-loop, &.icon-random
+            font-size 26px
+      .i-left
+        text-align right
+      .i-center
+        padding 0 20px
+        text-align center
+        i
+          font-size 48px
+      .i-right
+        text-align left
+      .icon-not-favorite
+        color $color-gray-d2
+      .icon-favorite
+        color $color-favorite
+
+.mini-player
+  max-width 500px
+  display flex
+  align-items center
+  position fixed
+  left 50%
+  bottom 0
+  transform translateX(-50%)
+  z-index 180
+  width 100%
+  height 60px
+  background -webkit-linear-gradient(top, #f9f9f9, #f3f3f3)
+  border-top-1px($color-border-d)
+  &.mini-enter-active, &.mini-leave-active
+    transition all .4s
+  &.mini-enter, &.mini-leave-to
+    opacity 0
+  .progress-circle
+    position relative
+    width 36px
+    height 36px
+    background-color $color-theme
+    border-radius 50%
+    .circle-item
+      position absolute
+      top 2px
+      left 2px
+      width 32px
+      height: 32px
+      border-radius 50%
+      background-color #f9f9f9
+      .play-icon
+        position absolute
+        top 11px
+        left 12px
+        z-index 3
+        width 10px
+        height 10px
+        background url(play.png) no-repeat center / cover
+        &.play
+          width 12px
+          height 12px
+          top 10px
+          left 10px
+          background-image url(pause.png)
+      .inner-circle
+        position absolute
+        top 2px
+        left 2px
+        width 28px
+        height 28px
+        border-radius 50%
+        z-index 2
+        background #f9f9f9
+      .circle, .circle-fill
+        position absolute
+        top -1px
+        left -1px
+        width 34px
+        height 34px
+        border-radius 50%
+        background-color $color-theme
+        clip rect(0 17px 34px 0)
+      .circle-fill
+        z-index 2
+      .circle-fill.gt50
+        width 32px
+        height 32px
+        top 0
+        left 0
+        background-color $color-theme
+        transform rotate(180deg)
+        clip rect(0 16px 32px 0)
+      .circle-fill.lt50
+        width 32px
+        height 32px
+        top 0
+        left 0
+        background-color #f9f9f9
+        clip rect(0 16px 32px 0)
+  .icon
+    flex 0 0 40px
+    width 40px
+    padding 0 10px 0 20px
+    img
+      border-radius 50%
+      &.play
+        animation cd-rotate 20s linear infinite
+      &.pause
+        animation-play-state: paused
+  .text
+    display flex
+    flex-direction column
+    justify-content center
+    flex 1
+    line-height 20px
+    overflow hidden
+    .name
+      margin-bottom 2px
+      no-wrap()
+      font-size $font-size-medium
+      color $color-font-d
+    .desc
+      no-wrap()
+      font-size $font-size-small
+      color $color-font-d
+  .control
+    flex 0 0 30px
+    width 30px
+    padding 0 10px
+    .icon-play-mini, .icon-pause-mini, .icon-playlist
+      font-size 30px
+      color $color-theme-d
+    .icon-mini
+      font-size 32px
+      position absolute
+      left 0
+      top 0
+
+@keyframes cd-rotate {
+  100% {
+    transform rotateZ(360deg)
+  }
+}
+
+@keyframes title-enter {
+  0% {
+    opacity 0
+    transform translate3d(0, -100%, 0)
+  }
+  100% {
+    opacity 1
+    transform translate3d(0, 0, 0)
+  }
+}
+
+@keyframes title-leave {
+  0% {
+    opacity 1
+    transform translate3d(0, 0, 0)
+  }
+  100% {
+    opacity 0
+    transform translate3d(0, -100%, 0)
+  }
+}
+
+@keyframes bottom-enter {
+  0% {
+    opacity 0
+    transform translate3d(0, 150%, 0)
+  }
+  100% {
+    opacity 1
+    transform translate3d(0, 0, 0)
+  }
+}
+
+@keyframes bottom-leave {
+  0% {
+    opacity 1
+    transform translate3d(0, 0, 0)
+  }
+  100% {
+    opacity 0
+    transform translate3d(0, 150%, 0)
+  }
+}

@@ -1,0 +1,26 @@
+@import "../../assets/stylus/mixin.styl";
+@import "../../assets/stylus/variable2.styl";
+
+.top-bar
+  position absolute
+  top 0
+  z-index 99
+  width 100%
+  height 40px
+  line-height 40px
+  text-align center
+  white-space nowrap
+  font-size 18px
+  color #fff
+  .top-title
+    margin 0 auto
+    width 70%
+    no-wrap()
+  .icon-back
+    position absolute
+    left 10px
+    top 50%
+    font-size 22px
+    color $color-gray-d2
+    transform translateY(-50%)
+    extend-click-after()

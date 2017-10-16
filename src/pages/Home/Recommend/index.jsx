@@ -3,52 +3,65 @@ import React, { Component } from 'react'
 //components
 import Slide from '../../../components/common/Slide'
 import FlexList from '../../../components/FlexList'
+import Scroll from '../../../components/common/Scroll'
+import Loading from '../../../components/common/Loading'
 
 import {createSong2} from "../../../util/createSong";
 import API from '../../../util/ApiServer'
+import componentWithRereshScroll from '../../../Mixins/refreshScrollMixin'
 
 import './style.styl'
 
 class Recommend extends Component {
     state = {
-        slideList: []
+        slideList: [],
+        flexListDataReady: false
     }
 
     render() {
         return (
-            <div className="recommend">
-                <div className="slider-wrapper">
-                    <Slide
-                        ref="slide"
-                        slot={
-                            this.state.slideList.map((item)=>{
-                                return (
-                                    <div className="slider-item" key={item.id}>
-                                        <a href={item.linkUrl}>
-                                            <img className="needsclick" src={item.picUrl}/>
-                                        </a>
-                                    </div>
-                                )
-                            })
-                        }
-                    ></Slide>
-                </div>
-                <FlexList
-                    ref="recomPlaylist"
-                    title="歌单推荐"
-                    imgName="cover"
-                    msgName="title"
-                    itemClick={this.addSongToList}
-                    complete={this.refrehScroll}
-                ></FlexList>
-                <FlexList
-                    ref="newSongList"
-                    title="新歌首发"
-                    imgName="cover"
-                    msgName="title"
-                    itemClick={this.toRecommendCd}
-                    complete={this.refrehScroll}
-                ></FlexList>
+            <div className="recommend" ref="scrollView">
+                <Scroll ref="scroll">
+                    <div className="slider-wrapper">
+                        <Slide ref="slide">
+                            {
+                                this.state.slideList.map((item)=>{
+                                    return (
+                                        <div className="slider-item" key={item.id}>
+                                            <a href={item.linkUrl}>
+                                                <img className="needsclick" src={item.picUrl}/>
+                                            </a>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </Slide>
+                    </div>
+                    {
+                        this.state.flexListDataReady &&
+                            <div>
+                                <FlexList
+                                    ref="recomPlaylist"
+                                    title="歌单推荐"
+                                    imgName="cover"
+                                    msgName="title"
+                                    itemClick={this.addSongToList}
+                                    complete={this.refrehScroll.bind(this)}
+                                ></FlexList>
+                                <FlexList
+                                    ref="newSongList"
+                                    title="新歌首发"
+                                    imgName="discImg"
+                                    msgName="title"
+                                    itemClick={this.toRecommendCd}
+                                    complete={this.refrehScroll.bind(this)}
+                                ></FlexList>
+                            </div>
+                    }
+                </Scroll>
+                {
+                    !this.state.flexListDataReady && <Loading/>
+                }
             </div>
         )
     }
@@ -82,12 +95,16 @@ class Recommend extends Component {
             return b.listen_num - a.listen_num
         })
 
-        this.refs.recomPlaylist.formatData(rec);
-        this.refs.newSongList.formatData(newSongList);
+        this.setState({
+            flexListDataReady: true
+        }, () => {
+            this.refs.recomPlaylist.formatData(rec);
+            this.refs.newSongList.formatData(newSongList);
+        })
     }
 
     refrehScroll() {
-
+        this.refs.scroll.refresh()
     }
 
     toRecommendCd() {
@@ -99,4 +116,4 @@ class Recommend extends Component {
     }
 }
 
-export default Recommend
+export default componentWithRereshScroll(Recommend)

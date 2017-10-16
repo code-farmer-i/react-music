@@ -1,0 +1,2 @@
+export const SET_RECOMMEND_CD = 'SET_RECOMMEND_CD'
+export const SET_SINGER = 'SET_SINGER'

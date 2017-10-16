@@ -22,7 +22,7 @@ class Slide extends Component {
         return (
             <div className="slider" ref="slider">
                 <div className="slider-group" ref="sliderGroup">
-                    {slot}
+                    {this.props.children}
                 </div>
                 <div className="dots">
                     {

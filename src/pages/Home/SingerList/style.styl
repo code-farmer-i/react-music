@@ -1,0 +1,49 @@
+@import "../../../assets/stylus/variable2.styl";
+@import "../../../assets/stylus/mixin.styl";
+
+.singer-list
+  position fixed
+  top 88px
+  bottom 0
+  width 100%
+  .list-group-title
+    height 30px
+    line-height 30px
+    padding-left 20px
+    font-size $font-size-small
+    color $color-font-gray
+    background-color $color-bg-gray
+  .list-group-item
+    position relative
+    display flex
+    align-items center
+    padding 10px 0 10px 30px
+    border-bottom-1px($color-border-l)
+    .avatar
+      width 50px
+      height 50px
+      border-radius 50%
+    .name
+      margin-left 20px
+      color $color-font-d
+      font-size $font-size-medium
+.list-shortcut
+  position absolute
+  z-index 40
+  right 6px
+  top 50%
+  transform translateY(-50%)
+  width 20px
+  padding 10px 0
+  border-radius 10px
+  text-align center
+  background $color-bg-gray-m
+  font-family Helvetica
+  border 1px solid $color-border
+  .item
+    padding 3px
+    line-height 1
+    color $color-font-gray
+    font-size $font-size-small
+    &.current
+      color $color-theme
