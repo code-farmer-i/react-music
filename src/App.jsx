@@ -20,7 +20,7 @@ class App extends Component{
             <Provider store={store}>
                 <div onTouchMove={this.preventDefault}>
                     {route}
-                    <DevTools />
+                    {/*<DevTools />*/}
                     <Play></Play>
                 </div>
             </Provider>

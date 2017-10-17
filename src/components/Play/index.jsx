@@ -10,12 +10,15 @@ import {
     changeMode,
     nextSong,
     prevSong,
-    showMini
+    showMini,
+    playerfullScreen
 } from '../../store/Play/Actions'
+
+import withMixins from '../../Mixins'
 
 import './style.styl'
 
-class User extends Component {
+class Play extends Component {
     state = {
         currentLyricTxt: '',
         audioCurrentTime: '',
@@ -31,6 +34,7 @@ class User extends Component {
     render() {
         const {
             fullScreen,
+            MiniShow,
             currentSong,
             playing,
             songListCount,
@@ -106,9 +110,8 @@ class User extends Component {
                                 <i className="icon-next" onClick={this.changeSong.bind(this, 'next')}></i>
                             </div>
                             <div className="icon i-right">
-                                <i className="icon"
-                                   className="[isFavorite(currentSong.id) ? 'icon-favorite' : 'icon-not-favorite']"
-                                   click="toggleFavorite(currentSong)"
+                                <i className={cs('icon', this.isFavorite(currentSong.id) ? 'icon-favorite' : 'icon-not-favorite')}
+                                   onClick={this.toggleFavorite.bind(this, currentSong)}
                                 ></i>
                             </div>
                         </div>
@@ -117,7 +120,7 @@ class User extends Component {
                         <img src={currentSong.discImg} width="100%" height="100%"/>
                     </div>
                 </div>
-                <div className={cs('mini-player', !fullScreen && songListCount ? '' : 'hide')} click="showFull">
+                <div className={cs('mini-player', MiniShow && songListCount ? '' : 'hide')} onClick={dispatch.bind(this, playerfullScreen())}>
                     <div className="icon">
                         <img width="40" height="40" src={currentSong.discImg} className={cs(playing ? 'play' : 'pause')}/>
                     </div>
@@ -126,11 +129,11 @@ class User extends Component {
                         <p className="desc" dangerouslySetInnerHTML={{__html: currentSong.singerName}}></p>
                     </div>
                     <div className="control">
-                        <div className="progress-circle" click="togglePlay">
+                        <div className="progress-circle" onClick={this.togglePlay.bind(this)}>
                             <div className={cs({'circle-item': true, 'gt50': this.getRatio() * 360 > 180})}>
                                 <div className="circle" style={{transform: `rotateZ(${this.getRatio() * 360}deg)`}}></div>
                                 <div className={cs('circle-fill gt50', this.getRatio() * 360 > 180 ? 'show' : 'hide')}></div>
-                                <div className={cs('circle-fill gt50', this.getRatio() * 360 < 180 ? 'show' : 'hide')}></div>
+                                <div className={cs('circle-fill lt50', this.getRatio() * 360 < 180 ? 'show' : 'hide')}></div>
                                 <div className="inner-circle"></div>
                                 <div className={cs('play-icon', playing ? 'play' : 'pause')}></div>
                             </div>
@@ -269,7 +272,9 @@ class User extends Component {
         return icon
     }
 
-    togglePlay() {
+    togglePlay(e) {
+        e.stopPropagation()
+
         const {
             dispatch,
             playing
@@ -317,7 +322,8 @@ export default connect(
             currentSong: Play.songList[Play.currentIdx] || {},
             playing: Play.playing,
             fullScreen: Play.fullScreen,
+            MiniShow: Play.MiniShow,
             mode: Play.mode
         }
     }
-)(User)
+)(withMixins(Play, ['favoriteMixin']))

@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 
 import refreshScrollMixin from './refreshScrollMixin'
+import favoriteMixin from './favoriteMixin'
 
 const Mixins = {
-    refreshScrollMixin
+    refreshScrollMixin,
+    favoriteMixin
 }
 
 const hookTypes = ['componentDidMount', 'componentWillReceiveProps', 'componentDidUpdate']
@@ -40,10 +42,10 @@ export default function(InnerComponent, mixins) {
         const InnerComponentHook = InnerComponent.prototype[hookName];
 
         InnerComponent.prototype[hookName] = function(...arg){
-            InnerComponentHook && InnerComponentHook.call(this)
+            InnerComponentHook && InnerComponentHook.call(this, ...arg)
 
             mixins.map((mixinName) => {
-                const hook = Mixins[mixinName].hook[hookName];
+                const hook = Mixins[mixinName].hook && Mixins[mixinName].hook[hookName];
 
                 hook && hook.call(this, ...arg)
             })

@@ -1,0 +1,27 @@
+@import "../../assets/stylus/variable2.styl"
+@import "../../assets/stylus/mixin.styl"
+
+.list-view
+  position absolute
+  top 0
+  bottom 0
+  width 100%
+  box-sizing border-box
+  overflow hidden
+  font-size 14px
+  .item
+    position relative
+    padding 0 30px
+    display flex
+    align-items center
+    height 64px
+    line-height 20px
+    font-size $font-size-medium
+    color $color-font-d
+    border-bottom-1px($color-border)
+    .item-wrap
+      width 100%
+    p
+      margin-top 4px
+      color $color-font-gray
+      no-wrap()

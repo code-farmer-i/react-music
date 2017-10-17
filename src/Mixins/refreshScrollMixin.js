@@ -2,11 +2,6 @@ export default {
     props:{
         scrollNeedFresh: false
     },
-    methods:{
-        testMethod: function(){
-            console.log(this)
-        }
-    },
     addState(state){
         return {
             MiniShow: state.Play.MiniShow
@@ -30,12 +25,10 @@ export default {
 
             if(MiniShow != prevMiniShow){
                 this.scrollNeedFresh = true
-                console.log(2)
             }
         },
         componentDidUpdate(){
             if(this.scrollNeedFresh) {
-                console.log(1)
                 this.refs.scrollView.style.bottom = '60px';
                 this.refs.scroll.refresh()
                 this.scrollNeedFresh = false

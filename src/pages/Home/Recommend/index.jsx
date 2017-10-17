@@ -6,6 +6,8 @@ import FlexList from '../../../components/FlexList'
 import Scroll from '../../../components/common/Scroll'
 import Loading from '../../../components/common/Loading'
 
+import {setRecommendCd} from "../../../store/Global/Actions";
+import {addSongToList} from "../../../store/Play/Actions";
 import {createSong2} from "../../../util/createSong";
 import API from '../../../util/ApiServer'
 import withMixins from '../../../Mixins'
@@ -45,7 +47,7 @@ class Recommend extends Component {
                                     title="歌单推荐"
                                     imgName="cover"
                                     msgName="title"
-                                    itemClick={this.addSongToList}
+                                    itemClick={this.toRecommendCd.bind(this)}
                                     complete={this.refrehScroll.bind(this)}
                                 ></FlexList>
                                 <FlexList
@@ -53,7 +55,7 @@ class Recommend extends Component {
                                     title="新歌首发"
                                     imgName="discImg"
                                     msgName="title"
-                                    itemClick={this.toRecommendCd}
+                                    itemClick={this.addSongToList.bind(this)}
                                     complete={this.refrehScroll.bind(this)}
                                 ></FlexList>
                             </div>
@@ -107,12 +109,17 @@ class Recommend extends Component {
         this.refs.scroll.refresh()
     }
 
-    toRecommendCd() {
+    toRecommendCd(cd) {
+        this.props.dispatch(setRecommendCd({
+            name: cd.title,
+            bg: cd.cover
+        }))
 
+        this.props.history.push(`/RecommendCd/${cd.content_id}`)
     }
 
-    addSongToList() {
-
+    addSongToList(song) {
+        this.props.dispatch(addSongToList(song))
     }
 }
 

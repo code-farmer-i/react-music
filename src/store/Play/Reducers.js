@@ -1,4 +1,5 @@
 import * as TYPES from './ActionsTypes'
+import {reducerCreator} from "../Creator/index";
 
 let initailState = {
     playing: false,
@@ -10,101 +11,102 @@ let initailState = {
     showSongList: false
 }
 
-function setSongList(state, songList){
-    return Object.assign({}, state, {
-        songList
-    });
-}
+const reducerMap = {
+    [TYPES.PLAY]: function(state){
+        return Object.assign({}, state, {
+            playing: true
+        })
+    },
+    [TYPES.PAUSE]: function(state){
+        return Object.assign({}, state, {
+            playing: false
+        });
+    },
+    [TYPES.CHANGE_MODE]: function(state, {mode}){
+        return Object.assign({}, state, {
+            mode
+        });
+    },
+    [TYPES.SET_SONGLIST]: function(state, {songList}){
+        return Object.assign({}, state, {
+            songList
+        });
+    },
+    [TYPES.SET_CURRENTIDX]: function(state, {idx}){
+        return Object.assign({}, state, {
+            currentIdx: idx
+        });
+    },
+    [TYPES.PLAY_LIST]: function(state, {songList, currentIdx}){
+        return Object.assign({}, state, {
+            songList,
+            currentIdx,
+            playing: true,
+            fullScreen: true,
+            MiniShow: true
+        });
+    },
+    [TYPES.NEXT_SONG]: function(state){
+        let idx;
 
-function setCurrentIdx(state, idx){
-    return Object.assign({}, state, {
-        currentIdx: idx
-    });
-}
+        if(state.currentIdx === state.songList.length - 1){
+            idx = 0
+        }else{
+            idx = state.currentIdx + 1
+        }
 
-function play(state){
-    return Object.assign({}, state, {
-        playing: true
-    });
-}
+        return Object.assign({}, state, {
+            currentIdx: idx
+        });
+    },
+    [TYPES.PREV_SONG]: function(state){
+        let idx;
 
-function pause(state){
-    return Object.assign({}, state, {
-        playing: false
-    });
-}
+        if(state.currentIdx === 0){
+            idx = state.songList.length -1
+        }else{
+            idx = state.currentIdx - 1
+        }
 
-function changeMode(state, mode){
-    return Object.assign({}, state, {
-        mode
-    });
-}
+        return Object.assign({}, state, {
+            currentIdx: idx
+        });
+    },
+    [TYPES.SHOW_MINI]: function(state){
+        return Object.assign({}, state, {
+            fullScreen: false
+        })
+    },
+    [TYPES.PLAYER_FULLSCREEN]: function(state){
+        return Object.assign({}, state, {
+            fullScreen: true
+        })
+    },
+    [TYPES.ADD_SONG_TO_LIST]: function(state, {song}){
+        const {songList} = state;
+        let changeState = {};
 
-function playList(state, action){
-    return Object.assign({}, state, {
-        songList: action.songList,
-        currentIdx: action.currentIdx,
-        playing: true,
-        fullScreen: true
-    });
-}
+        const idx = songList.findIndex((songItem)=>{
+            return songItem.id === song.id
+        })
 
-function nextSong(state){
-    let idx;
+        if(idx != -1){
+            changeState = {
+                currentIdx: idx
+            }
+        }else{
+            changeState = {
+                songList: [song, ...songList],
+                currentIdx: 0
+            }
+        }
 
-    if(state.currentIdx === state.songList.length - 1){
-        idx = 0
-    }else{
-        idx = state.currentIdx + 1
+        return Object.assign({}, state, changeState, {
+            playing: true,
+            fullScreen: true,
+            MiniShow: true
+        })
     }
-
-    return Object.assign({}, state, {
-        currentIdx: idx
-    });
 }
 
-function prevSong(state){
-    let idx;
-
-    if(state.currentIdx === 0){
-        idx = state.songList.length -1
-    }else{
-        idx = state.currentIdx - 1
-    }
-
-    return Object.assign({}, state, {
-        currentIdx: idx
-    });
-}
-
-function showMini(state){
-    return Object.assign({}, state, {
-        MiniShow: true,
-        fullScreen: false
-    })
-}
-
-export function Play(state = initailState, action){
-    switch (action.type) {
-        case TYPES.PLAY:
-            return play(state)
-        case TYPES.PAUSE:
-            return pause(state)
-        case TYPES.CHANGE_MODE:
-            return changeMode(state, action.mode)
-        case TYPES.SET_SONGLIST:
-            return setSongList(state, action.songList)
-        case TYPES.SET_CURRENTIDX:
-            return setCurrentIdx(state, action.idx)
-        case TYPES.PLAY_LIST:
-            return playList(state, action)
-        case TYPES.NEXT_SONG:
-            return nextSong(state)
-        case TYPES.PREV_SONG:
-            return prevSong(state)
-        case TYPES.SHOW_MINI:
-            return showMini(state)
-        default:
-            return state
-    }
-}
+export const Play = reducerCreator(initailState, TYPES, reducerMap)

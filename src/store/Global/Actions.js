@@ -1,15 +1,5 @@
 import * as TYPES from './ActionsTypes'
+import {makeActionCreator} from "../Creator/index";
 
-export function setSinger(singer){
-    return {
-        type: TYPES.SET_SINGER,
-        singer
-    }
-}
-
-export function setRecommendCd(cdInfo){
-    return {
-        type: TYPES.SET_RECOMMEND_CD,
-        cdInfo
-    }
-}
+export const setSinger = makeActionCreator(TYPES.SET_SINGER, 'singer')
+export const setRecommendCd = makeActionCreator(TYPES.SET_RECOMMEND_CD, 'recommenCd')

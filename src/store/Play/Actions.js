@@ -1,61 +1,30 @@
 import * as TYPES from './ActionsTypes'
+import {makeActionCreator} from "../Creator/index";
 
-export function setSongList(songList){
-    return {
-        type: TYPES.SET_SONGLIST,
-        songList
-    }
-}
-
-export function setCurrentIdx(idx){
-    return {
-        type: TYPES.SET_CURRENTIDX,
-        idx: idx
-    }
-}
-
-export function play(){
+export const play = function(){
     return {
         type: TYPES.PLAY,
         playing: true
     }
 }
 
-export function pause(){
+export const pause = function(){
     return {
         type: TYPES.PAUSE,
         playing: false
     }
 }
 
-export function nextSong(){
-    return {
-        type: TYPES.NEXT_SONG
-    }
-}
+export const playList = makeActionCreator(TYPES.PLAY_LIST, 'songList', 'currentIdx')
+export const setSongList = makeActionCreator(TYPES.SET_SONGLIST, 'songList')
+export const setCurrentIdx = makeActionCreator(TYPES.SET_CURRENTIDX, 'idx')
+export const nextSong = makeActionCreator(TYPES.NEXT_SONG)
+export const prevSong = makeActionCreator(TYPES.PREV_SONG)
+export const showMini = makeActionCreator(TYPES.SHOW_MINI)
+export const changeMode = makeActionCreator(TYPES.CHANGE_MODE, 'mode')
+export const addSongToList = makeActionCreator(TYPES.ADD_SONG_TO_LIST, 'song')
+export const playerfullScreen = makeActionCreator(TYPES.PLAYER_FULLSCREEN)
 
-export function prevSong(){
-    return {
-        type: TYPES.PREV_SONG
-    }
-}
 
-export function showMini(){
-    return {
-        type: TYPES.SHOW_MINI
-    }
-}
 
-export function changeMode(mode){
-    return {
-        type: TYPES.CHANGE_MODE,
-        mode
-    }
-}
 
-export function playList(conf){
-    return {
-        type: TYPES.PLAY_LIST,
-        ...conf
-    }
-}

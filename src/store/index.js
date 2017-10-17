@@ -2,6 +2,7 @@ import { combineReducers, createStore, compose } from 'redux'
 
 import * as PlayReducers from './Play/Reducers'
 import * as GlobalReducers from './Global/Reducers'
+import * as FavoriteListReducers from './FavoriteList/Reducers'
 
 import DevTools from '../components/common/DevTools'
 
@@ -12,7 +13,8 @@ const enhancer = compose(
 
 const rootReducer = combineReducers({
     ...PlayReducers,
-    ...GlobalReducers
+    ...GlobalReducers,
+    ...FavoriteListReducers
 })
 
 export default function createStoreWithMiddleware(initialState){

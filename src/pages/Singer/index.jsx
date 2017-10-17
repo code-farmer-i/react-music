@@ -72,10 +72,7 @@ class Singer extends Component {
     playList(idx) {
         const {dispatch} = this.props;
 
-        dispatch(playList({
-            songList: this.state.songList,
-            currentIdx: idx
-        }))
+        dispatch(playList(this.state.songList, idx))
     }
 
 }

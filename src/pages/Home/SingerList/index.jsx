@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 
 import Scroll from '../../../components/common/Scroll'
 
@@ -142,4 +141,4 @@ class SingerList extends Component {
     }
 }
 
-export default connect()(withMixins(SingerList, ['refreshScrollMixin']))
+export default withMixins(SingerList, ['refreshScrollMixin'])
