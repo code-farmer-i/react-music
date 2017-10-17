@@ -10,7 +10,7 @@ import { playList } from '../../store/Play/Actions'
 import API from '../../util/ApiServer'
 import { createSong } from "../../util/createSong";
 
-import componentWithRereshScroll from '../../Mixins/refreshScrollMixin.jsx'
+import withMixins from '../../Mixins'
 
 import './style.styl'
 
@@ -86,4 +86,4 @@ export default connect(
             singer: state.singer
         }
     }
-)(componentWithRereshScroll(Singer))
+)(withMixins(Singer, ['refreshScrollMixin']))

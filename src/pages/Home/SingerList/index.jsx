@@ -6,7 +6,7 @@ import Scroll from '../../../components/common/Scroll'
 import { setSinger } from '../../../store/Global/Actions'
 import createSinger from '../../../util/createSinger'
 import API from '../../../util/ApiServer'
-import componentWithRereshScroll from '../../../Mixins/refreshScrollMixin'
+import withMixins from '../../../Mixins'
 
 import './style.styl'
 
@@ -142,4 +142,4 @@ class SingerList extends Component {
     }
 }
 
-export default connect()(componentWithRereshScroll(SingerList))
+export default connect()(withMixins(SingerList, ['refreshScrollMixin']))

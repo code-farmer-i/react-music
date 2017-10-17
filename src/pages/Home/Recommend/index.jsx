@@ -8,7 +8,7 @@ import Loading from '../../../components/common/Loading'
 
 import {createSong2} from "../../../util/createSong";
 import API from '../../../util/ApiServer'
-import componentWithRereshScroll from '../../../Mixins/refreshScrollMixin'
+import withMixins from '../../../Mixins'
 
 import './style.styl'
 
@@ -116,4 +116,4 @@ class Recommend extends Component {
     }
 }
 
-export default componentWithRereshScroll(Recommend)
+export default withMixins(Recommend, ['refreshScrollMixin'])
