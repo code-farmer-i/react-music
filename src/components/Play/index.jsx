@@ -18,6 +18,7 @@ import withMixins from '../../Mixins'
 
 import './style.styl'
 
+@withMixins(['favoriteMixin', 'watcherMixin'])
 class Play extends Component {
     state = {
         currentLyricTxt: '',
@@ -25,6 +26,19 @@ class Play extends Component {
         audioDuration: '',
         progressWidth: 0,
         prevCurrentTime: 0
+    }
+
+    watchProps = {
+        currentSong: function(currentSong, prevSong) {
+            currentSong.id != prevSong.id && this.changeSrc(currentSong)
+        },
+        playing: function(newVal){
+            if (newVal) {
+                this.playAudio()
+            } else {
+                this.pauseAudio()
+            }
+        }
     }
 
     progressBtnWidth = 30
@@ -157,30 +171,6 @@ class Play extends Component {
 
         this.audioEl = this.refs.audioEl;
         this.refs.slide.renderSlide()
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const {
-            currentSong: prevSong,
-            MiniShow: prevMiniShow
-        } = this.props;
-
-        const {
-            currentSong,
-            playing,
-            MiniShow
-        } = nextProps;
-
-        //当前歌曲变化
-        if (currentSong.id !== prevSong.id) {
-            this.changeSrc(currentSong);
-        }
-
-        if (playing) {
-            this.playAudio()
-        } else {
-            this.pauseAudio()
-        }
     }
 
     getRatio() {
@@ -326,4 +316,4 @@ export default connect(
             mode: Play.mode
         }
     }
-)(withMixins(Play, ['favoriteMixin']))
+)(Play)

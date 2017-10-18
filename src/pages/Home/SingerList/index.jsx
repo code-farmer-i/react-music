@@ -9,6 +9,7 @@ import withMixins from '../../../Mixins'
 
 import './style.styl'
 
+@withMixins(['refreshScrollMixin'])
 class SingerList extends Component {
     state = {
         singerList: [],
@@ -141,4 +142,4 @@ class SingerList extends Component {
     }
 }
 
-export default withMixins(SingerList, ['refreshScrollMixin'])
+export default SingerList

@@ -14,6 +14,7 @@ import withMixins from '../../../Mixins'
 
 import './style.styl'
 
+@withMixins(['refreshScrollMixin'])
 class Recommend extends Component {
     state = {
         slideList: [],
@@ -123,4 +124,4 @@ class Recommend extends Component {
     }
 }
 
-export default withMixins(Recommend, ['refreshScrollMixin'])
+export default Recommend

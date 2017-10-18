@@ -14,6 +14,7 @@ import withMixins from '../../Mixins'
 
 import './style.styl'
 
+@withMixins(['refreshScrollMixin'])
 class Singer extends Component {
     state = {
         songList: []
@@ -83,4 +84,4 @@ export default connect(
             singer: state.singer
         }
     }
-)(withMixins(Singer, ['refreshScrollMixin']))
+)(Singer)
